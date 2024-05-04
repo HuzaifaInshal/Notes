@@ -8,6 +8,10 @@ some important concepts from vid (2)
 3. Spring is Inversion of COntrol; control of program or app is not handled by code flow but by framework
 4. Spring is Aspect Orinted Programming and MVC
 
+some important from elsewhere:
+1. Transaction Management in spring means that if we declare a method or class as transaction then it will return only when all operations inside are completed 
+if any one fails then all will fail (revert back)
+
 some importatnt annotations:
 @Bean (must be non-private and non-final)
 @Configuration (class must not be final or public)

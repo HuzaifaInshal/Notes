@@ -1,0 +1,39 @@
+vdo link:
+https://youtu.be/xHminZ9Dxm4?si=UEKIsdsWJt-4LYwM
+
+create project
+create db
+connect both
+
+declare an object as @Entity and as @Table(name="[tablename]") if object and db table names are different
+assign id as @Id and @GeneratedValue(strategy=GenerationType.IDENTITY) to make it pk
+assign those fields with @Column(name="[db_column_name]") if field name and column name are different
+
+create a session factory:
+create a /resources/hibernate.cfg.xml
+
+write code to begin sessionfactory
+and perform operations on db with builtin methods or create a hibernate query (HQL)
+
+ 	Session session = sessionFactory.openSession();
+	   session.beginTransaction();
+	   session.remove(new User("Marco's Friend", LocalDate.now())); OR any other operation OR  List<User> result = session.createQuery( "select u from User u" , User.class).list();
+	   session.getTransaction().commit();
+	   session.close();
+
+sessions factory can be  replaced by entity managers factory of JPA they are more JPAized
+
+can use hibernate criteria api to write complex queries for complex forms (could replace with extreme string concatenations)
+
+links with spring boot:
+1. no need to implement hibernate.cfg.xml just few lines in application.properties will do the trick
+2. spring will auto create an entity manager factory for u
+3. in spring wont use code like beginTransaction() or getTransaction() or there jpa alters rather an annotation
+of @Transactional will do the trick of transaction management
+4. no need to write criteria api or hql queries just an interface or repositories in spring boot and 
+sprinf data will convert it to approapriate hibernate/jpa code
+
+
+
+
+

@@ -2,7 +2,18 @@ video link:
 https://youtu.be/4Ico2HjRTCE?si=LxhXkPs6ZOV7veNA
 
 IMPORTANT:
-DONT USE LOMBOK ANYMORE IT DOESNT WORK instead write everything getters and setters, toString and equalAndHashCode by urself
+a Model cannot be a record it should be a class
+DONT USE LOMBOK ANYMORE IT DOESNT WORK instead use
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+ or write everything getters and setters, toString and equalAndHashCode by urself
 always use constructor based dependency injection when have mandatory parametre
 and use setter based dependency injection when have optional parametres
 @Autowired is not used in constructor based DI becoz bean is only called/constructed once and boot will automatically inject all necessary dependencies
@@ -27,8 +38,10 @@ use @Data above the class in model this is a lombok annotation that implements g
 or use Record
 in model class use @Entity, @Table(name="any") from jakarta.persistence 
 entity tells hibernate that this is the object that needs to be mapped
+table is used when your object and table names are different if not then no need to use @Table
 in id assign @Id and @GeneratedValue(strategy=GenerationType.IDENTITY) from jakarta.persistence to made it primary key
-assign @Column to each
+assign @Column(name="[database column name]") to those whose object field name and database column name are different
+
 
 create EmployeeRepository as Interface and extends to JpaRepository<Model,typeofpk>
 no need to add @Repository and @Transactional to EmployeeRepository because parent class JpaRepository already use it
