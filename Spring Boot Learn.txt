@@ -1,0 +1,104 @@
+notes prepared from:
+1) https://youtu.be/31KTdfRH6nY?si=jDuFcoV4_WYtRVFW
+2) https://youtu.be/5rNk7m_zlAg?si=J72oAXxv_nHLWtmX
+
+some important concepts from vid (2)
+1. Bean is the basic building block of the system every object created or manageb by spring is called bean
+2. Central container aka IOC Container of spring is the main context that runs and manages all the beans (mages lifecycle).
+3. Spring is Inversion of COntrol; control of program or app is not handled by code flow but by framework
+4. Spring is Aspect Orinted Programming and MVC
+
+some importatnt annotations:
+@Bean (must be non-private and non-final)
+@Configuration (class must not be final or public)
+@Component (makes a spring component, implements @Autowired) have subtypes
+1. @Repository 2. @Service 3. @Controller
+@Qualifier (could also uses @PRimary)
+
+dependency injection types by spring:
+Constructor injection
+Field injection(using @Autowired)
+configuration methods aka method injection (using @Autowired)
+setter method injection
+
+Bean scope
+Singleton or once in entire app is default for every bean
+
+=============== NOTES FROM VID (1) ===============
+must place all the files inside src/mai/java/com/meta/fb
+anything Java outside of this cant be talked by spring
+
+There are 2 ways to layer out the project
+1.
+use folders structure
+src/mai/java/com/meta/fb/controllers
+src/mai/java/com/meta/fb/services
+src/mai/java/com/meta/fb/routes
+but here the controllers need to talk to any other e.g. fooController talks to fooServices so both
+needs to be public(not good practise)
+
+2.
+layer out on basis of feature like src/mai/java/com/meta/fb/foo which contains
+fooController, fooServices, fooOthers
+
+
+create a new package inside main dir
+OPTIONAL:
+new class
+declare vars
+write contructor
+create getter and setter
+create hashCode and equals 
+create otString
+TO BE DONE:
+new record
+create vars inside it
+
+create controller
+could use @RequestMapping(path,reqtype)
+or use GetMapping, PUtMapping, etc.
+
+controllers are used for routing, repositories are used for controlling things
+
+Some Life cycle methods of a bean
+@POstConstruct --> is auto call after class is created in spring boot context/container; 
+
+Databases:
+h2 database with JDBC API implements (prev both are dependencies) an in memory database
+create a schema (structure) of DB with name schema.sql
+create test.mv.db in specified path
+
+Dependency Injection means we will inject it in constructor and assign to one of the fields/variable
+
+if a value is passed in constructor thats arguements but if a class is passed its DI, if a function is passed then thats a higher order function or callback concept
+
+in data.sql
+
+INSERT INTO Run(id,title,started_on,completed_on,miles,location)
+VALUES(1,'Morning','2024-01-01 06:00:00','2024-01-01 07:00:00',5,'OUTDOOR');
+
+TOPICS SKIPPED FOR WIRTING
+PostgreSQL with Docker
+Spring Data JDBC (provdes a way to call some functions to interact withdb, doesn`t needsto create any methods of your own)
+RestClients (use to communicate with other service usually in a microservice environment)
+tests
+	
+Spring Data JDBC provide CRUD functions that can be called directly in Run Controller without needs to be specified in Repository
+There are also some out of the box specialized CRUD options like searchByLocation that are automatically present in Spring Data JDBC
+these however needs to be just declared in respository and can be called in controller
+List<Run> findByLocation(String location);
+
+you can also do like 
+
+@Query(and then define your own custom query here)
+List<Run> findByLocation(String location);
+or
+@Query(and then define your own custom query here)
+List<Run> customMethod(String location);
+
+
+is restClient
+either create every thing by yourself liken in UserRestCLient.java
+or use builtin UserHttpClient (but have to specify it in main Application.java) and import in UserCOntroller.java
+
+Tests are something done outside of the scope of spring unless you use @SpringBootTest (loads whole app) or use @[slice]Test (loads that package)

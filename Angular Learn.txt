@@ -1,0 +1,48 @@
+topics covered:
+Template Syntax
+Binding Syntax
+Banana Syntax Box syntax
+Types of directives: 1) structural directives (change behaviour of DOM, slow) 2) attribute directives
+builtin directives:
+*ngIf, *ngFor, *ngSwitch, ngClass, ngStyle
+Pipes (used for data transformation without changing actual data)
+builtin pipes:
+DatePipe,UpperCasePipe, Lowercasepipe, currencypipe, decimalpipe, percentpipe, jsonpipe, slicepipe, asyncpipe
+Lifecycle Hooks
+8 hooks
+from ngOnChanges, ngOnInit to ngOnDestroy
+Ways of component communication:
+1) using @Input and @Output
+2) using @ViewChild and @ContentChild or @ContentChildren
+3) using Services
+Smart and Dumb Component
+Content Projection
+Dynamic loading of component
+Accessing an HTML element using ref
+DI
+DI providers
+
+
+
+the topics belowe can only be implemented on ngmodule based project not on standalone project
+
+TEMPLATE DRIVEN FORMS
+FEATURE MODULING
+NESTED AND CHILD ROUTINGS
+LAZY LOADING OF A MODULE
+ROUTE GUARDS (ROUTING EVENTS)
+REACTIVE FORMS
+CUSTOME PIPE
+
+
+
+
+THINGS YOU CAN GENERATE ON ANGULAR:
+
+module [distribute application on basis of webpack and src files multiple files for SPAs]
+guard [add routes guards/control to urls]
+service (dependency) [are classes that can be called with instances in web; are injected]
+directives [are components without template files]
+components
+interceptors
+pipe
