@@ -1,3 +1,47 @@
 git link:
 https://github.com/HuzaifaInshal/TodoApp.git
 
+In order to serve the build frontend use:
+app.use(express.static(path.join(__dirname,'./frontend/dist/')))
+app.get('*',(req,res)=>res.sendFile(path.resolve(__dirname,'./','frontend','dist','index.html')))
+
+====================================
+========= GENERAL FLOW =============
+====================================
+
+start by creating index.js
+app.use('/api/user',require('./routes/userRoutes'))
+
+then in userRoutes
+const router = require('express').Router()
+router.post('/signup',registerUser)
+router.post('/login',loginUser)
+
+then in cotrollers do the necessary code
+
+====================================
+========= MONGO DB FLOW=============
+====================================
+in index.js
+const connectDB = require('./database/config/db')
+connectDB()
+
+in database/config/db
+const mongoose = require('mongoose')
+const connectDB = async()=>{
+    try {
+        const con = await mongoose.connect(process.env.MONGO_URL);
+        console.log(`MongoDb connected successfully: ${con.connection.host} :)`.cyan.underline)
+    } catch (error) {
+        console.log(error)
+        process.exit(1)
+    }
+}
+module.exports = connectDB
+
+in database/models/[modelName/schemaName]
+describe the schema
+
+====================================
+=========== JWT FLOW ===============
+====================================
