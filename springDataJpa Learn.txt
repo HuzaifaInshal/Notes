@@ -1,0 +1,49 @@
+video link:
+https://youtu.be/4Ico2HjRTCE?si=LxhXkPs6ZOV7veNA
+
+IMPORTANT:
+DONT USE LOMBOK ANYMORE IT DOESNT WORK instead write everything getters and setters, toString and equalAndHashCode by urself
+always use constructor based dependency injection when have mandatory parametre
+and use setter based dependency injection when have optional parametres
+@Autowired is not used in constructor based DI becoz bean is only called/constructed once and boot will automatically inject all necessary dependencies
+@RequestBody converts the incoming request json to Java object
+ResponseEntity implements the Http response as a type containing body headers and statuscodes
+ResponseEntity<Employee> means will return response body of type Employee
+
+uses spring 3 layer architecture:
+Client -> Controller (API routes) -> Service (business logic) -> DAO/Repository (persistence logic) -> DB
+
+steps:
+create database [db_name]; will then create schema
+configure database in src/main/resources/application.properties
+configure jdbc driver (not rquired anymore), jdbc url(main url of db), username, password
+also set
+#Hibernate properties
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect (dont implement in spring boot 3 or above; only for 2 and below; else will give error)
+spring.jpa.hibernate.ddl-auto=update
+
+create model
+use @Data above the class in model this is a lombok annotation that implements getter setter tostring equalsAndHashcode
+or use Record
+in model class use @Entity, @Table(name="any") from jakarta.persistence 
+in id assign @Id and @GeneratedValue(strategy=GenerationType.IDENTITY) from jakarta.persistence to made it primary key
+assign @Column to each
+
+create EmployeeRepository as Interface and extends to JpaRepository<Model,typeofpk>
+no need to add @Repository and @Transactional to EmployeeRepository because parent class JpaRepository already use it
+
+create Exception
+
+create services to handle controls
+
+create API controller class, annotate that with @RestController, you can also use @Controller but for that you had to specify @ResponseBody in every request method
+
+
+in the given code runRepository which implements Jpa needs to be called inside the 
+serviceimpl with jpa methods to perform basic db operations
+
+controller (routes) calls services which in turn calls repository
+
+
+
+
