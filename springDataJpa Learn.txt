@@ -26,6 +26,7 @@ create model
 use @Data above the class in model this is a lombok annotation that implements getter setter tostring equalsAndHashcode
 or use Record
 in model class use @Entity, @Table(name="any") from jakarta.persistence 
+entity tells hibernate that this is the object that needs to be mapped
 in id assign @Id and @GeneratedValue(strategy=GenerationType.IDENTITY) from jakarta.persistence to made it primary key
 assign @Column to each
 
