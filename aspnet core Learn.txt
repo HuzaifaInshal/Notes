@@ -1,0 +1,42 @@
+vdo link:
+https://youtu.be/AhAxLiGC7Pc?si=GqaQrTJSnFiAg6Wd
+
+Program.cs is an entry point C# file
+.csproj is project file that contain all the dependencies, files, system assemblies needed for the project
+Assemblies are basic building blocks of .NET code they are basically chunks of compiled code usuallt in .exe or .dll that can be used in runtime of .NET
+They are basically JAR (java) files of C#
+2 types:
+1. Private Assembly: The dll or exe which is sole property of one application only. It is generally stored in application root folder
+2. Public/Shared assembly: It is a dll which can be used by multiple applications at a time. A shared assembly is stored in GAC i.e Global Assembly Cache.
+appsettings.json is the config file for production env
+launchSetting.json is the development config file for declaring some profiles specific to web
+obj contains intermediate temporary files for compiling
+bin contains compiled level assemblies after compilation/build
+
+namespaces are equivalent of packages in java
+
+DTOs are also called contracts in .NET env (they are linking objects bw clietn and server)
+
+create extension methods in /Endpoints/
+
+add nuget package for validations
+
+for Entity Framework COre (added 2 local packages and 1 global package(dotnet-ef)):
+1. create Entiites (Models)
+2. create Data and the DatabaseContext
+3. must create a DB configuration file (like .env or application.properties of spring) to hold some values for db
+one way is appsettings.json (only for sqlite and local DB)
+other ways are Command Line Args, Environment Variables, user secrets, cloud sources
+use user secret to store db credentials of like (MySQL, or Postgresql)
+ASP.net maps all these ways onto IConfiguration
+4. in program.css 
+builder.Services.AddSqlite<GameStoreContext>(connString);
+where connString is the connection source of sqlite
+5. for sqlite only; making migration: 
+dotnet ef migrations add [migrationName] [--output-dir Data\Migrations]*optional
+dotnet ef database update
+
+
+
+
+
