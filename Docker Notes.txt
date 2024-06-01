@@ -1,0 +1,58 @@
+=================
+DOCKER NOTES
+==========
+
+Containers are used to package code, dependencies and configurations and made them portable
+Containers are stored in container repository
+There are private repositories for big corps
+but their is a public repository DockerHub
+A container is a grp of images stacked on to eachother and at the base is alpine a linux image
+Docker file -> Docker image -> docker container
+Images are actual package so the application together with its configs and dependencies and all stuff, is artifact and moveable
+Container is when I pull the image and start it so the environment that is built around it is called container
+Packed stuff when not running (image)
+Packed stuff when running (container)
+Docker uses pre host vs VM launches its own hosts
+Linux based images cant be installed on windows
+if your OS is not compatible with docker setup (widnwos10) you must use docker toolbox
+Docker daemon is the main engine that manages all images and containers.
+Container port calls to host port (my pc port)
+Container port can be same (as they are refered to diff host port) but not the host port 
+Jenkins is used to create CI pipeline; it builds app and create its image which is then pushed to docker repository
+e.g.
+Docker hub => MongoDB image => integrated with JS application => pushed to git => Jenkins(CI) created image of JS app => pushed to Docker repo => pulled (both JS app & mongo image) by other team
+
+
+COMMANDS:
+docker pull [image name]
+docker run [image name] (creates a new container from image)
+docker start [container id from ps] (will start container)
+docker run --name [what I want to name] [container name]
+docker stop [container id from ps] (will pause container)
+docker run -p[host port]:[container port] [container name]
+docker run -d [container name] (will run in detached mode not require terminal to remain on)
+docker ps (list all running container)
+docker ps -a (list all container running or not running )
+docker images (will list all images installed locally on your machine)
+docker logs [containerid] (list all logs for that container)
+dcoker logs [container name] (list all logs for that container)
+docker exec -it [container id] (created an interactive terminal; inside it you can access all files of docker with cmd commands)
+
+DOCKER INSTALLATION:
+first of all check from task manager performance tab in CPU if virtualization is enabled if not then enable it in BIOS
+from Esc then f10 enter in bios in systems security in security tab enable virtaulization
+if bios has enabled virtualization but not windows then follow this (https://answers.microsoft.com/en-us/windows/forum/all/intel-virtualization-enabled-in-bios-but-not-seem/8000d139-5924-4031-bd67-433cf4eb3691)
+install DOcker Desktop WSL2 from official site (https://docs.docker.com/desktop/install/windows-install/)
+open cmd as admin write `wsl --install` or `wsl.exe --install -d ubuntu`
+to check if ubuntu is installed `wsl -l -v`
+should list NAME STATE VERSION with Ubuntu stopped 2
+if ubuntu is not running then `wsl --set-default ubuntu`
+then check status `wsl --status`
+Default Distribution: Ubuntu
+Default Distribution: 2
+if you encounter with error when you are installing, Downgrade wsl version to 1 install distro and then upgrade to version 2.
+`wsl --set-default-version 1`
+`wsl –install` or `wsl.exe --install -d ubuntu`
+`wsl --set-default-version 2`
+`wsl.exe --set-version ubuntu 2`
+finally on cmd as admin run `bcdedit /set hypervisorlaunchtype auto`
