@@ -27,7 +27,18 @@ Docker compose is basically a interface to define all commands on a file and run
 Dc creates a common network for images defined in that file so no --net configs are set unlike in docker cli
 Docker file is a blueprint of docker images
 we first delete container then image
+for huge applications always compress them into artifacts via Dockerfile and then push
 Docker reigstries aka docker repositories
+In docker volume container file system is mounted on host filesystem to persist data
+Type of docker volumes:
+1)Host volumes
+docker run -v [host dir path]:[container dir path]
+2) Anonymous Volumes (docker tiself will select host dir)
+dokcer run -v [container dir path]
+3) Named Volumes (it is  best)
+docker run -v name:[container dir path]
+in windows docker volumes are stored in c/programdata/docker/volume
+
 
 DOCKER CLI COMMANDS:
 docker pull [image name]
@@ -54,8 +65,8 @@ docker rmi [image id] (delete image)
 docker rm [container id] (delete container)
 docker ps -a | grep [name to search] (search with name)
 docker exec -it [container id] /bin/bash or /bin/sh (get interactive cmd terminal or runnnig container)
-for huge applications always compress them into artifacts via Dockerfile and then push
-
+dokcer tag [image name]:[imagetag] [registry domain]/[registry image]:[tag]
+docker push [registry domain]/[registry image]:[tag]
 
 DOCKER COMPOSE COMMANDS:
 docker-compose -f [filename].yaml up (start the compose file)
@@ -93,7 +104,12 @@ services:
 			- [host port]:[container port]
 		environment:
 			- [envnaem]=[envvalue]
+		volumes:
+			- [host volume name e.g. mongo-data]:[container path e.g. /data/db]
 	[second image and so on]
+volumes:
+	[name of host volume e.g.mongo-data]:
+		driver:local
 
 
 SAMPLE DOCKER FILE
