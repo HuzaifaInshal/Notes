@@ -21,24 +21,49 @@ Container port can be same (as they are refered to diff host port) but not the h
 Jenkins is used to create CI pipeline; it builds app and create its image which is then pushed to docker repository
 e.g.
 Docker hub => MongoDB image => integrated with JS application => pushed to git => Jenkins(CI) created image of JS app => pushed to Docker repo => pulled (both JS app & mongo image) by other team
+Docker network runs all images in its network
+for e.g. if a nodejs wants to talk to mongodb and mongo-express it needs to call its port but mongo and mongo-expr can talk to each other without port and stuff
+Docker compose is basically a interface to define all commands on a file and run it
+Dc creates a common network for images defined in that file so no --net configs are set unlike in docker cli
+Docker file is a blueprint of docker images
+we first delete container then image
+Docker reigstries aka docker repositories
 
-
-COMMANDS:
+DOCKER CLI COMMANDS:
 docker pull [image name]
 docker run [image name] (creates a new container from image)
 docker start [container id from ps] (will start container)
 docker run --name [what I want to name] [container name]
 docker stop [container id from ps] (will pause container)
 docker run -p[host port]:[container port] [container name]
+docker run --net [network name] (to run that image onthat network)
+docker run -e [1st env variable]=[1st env value] -e [2nd env variable]=[2nd env value]
 docker run -d [container name] (will run in detached mode not require terminal to remain on)
 docker ps (list all running container)
 docker ps -a (list all container running or not running )
 docker images (will list all images installed locally on your machine)
 docker logs [containerid] (list all logs for that container)
+docker logs [containerid] | tail (to see the latest log)
+docker logs [containerid] -f (will stream logs)
 dcoker logs [container name] (list all logs for that container)
 docker exec -it [container id] (created an interactive terminal; inside it you can access all files of docker with cmd commands)
+docker network ls (shows list of all docker networks)
+docker network create [netwoek name] (create a netwrok)
+docker build -t [image name e.g. my-app:1.0] [location of Dockerfile . for current dir]
+docker rmi [image id] (delete image)
+docker rm [container id] (delete container)
+docker ps -a | grep [name to search] (search with name)
+docker exec -it [container id] /bin/bash or /bin/sh (get interactive cmd terminal or runnnig container)
+for huge applications always compress them into artifacts via Dockerfile and then push
+
+
+DOCKER COMPOSE COMMANDS:
+docker-compose -f [filename].yaml up (start the compose file)
+docker-compose -f [] down (shut off the containers also removes the network)
+
 
 DOCKER INSTALLATION:
+it will install docker and docker compose both
 first of all check from task manager performance tab in CPU if virtualization is enabled if not then enable it in BIOS
 from Esc then f10 enter in bios in systems security in security tab enable virtaulization
 if bios has enabled virtualization but not windows then follow this (https://answers.microsoft.com/en-us/windows/forum/all/intel-virtualization-enabled-in-bios-but-not-seem/8000d139-5924-4031-bd67-433cf4eb3691)
@@ -56,3 +81,26 @@ if you encounter with error when you are installing, Downgrade wsl version to 1 
 `wsl --set-default-version 2`
 `wsl.exe --set-version ubuntu 2`
 finally on cmd as admin run `bcdedit /set hypervisorlaunchtype auto`
+
+
+
+DOCKER COMPOSE YAML FILE 
+version:'3'
+services:
+	[name of image that i want to set]:
+		image:[name of image in docker hub]
+		ports:
+			- [host port]:[container port]
+		environment:
+			- [envnaem]=[envvalue]
+	[second image and so on]
+
+
+SAMPLE DOCKER FILE
+FROM node (base level image)
+ENV MONGO_USERNAME=admin (optional if not declaring on mongo image envs)
+    MONGO_PWD=password
+RUN mkdir -p/home/app (basically can run any linux cmmnd will not affect host file system, will execute in container environement)
+COPY . /home/app (copy from host file sys to container file sys in this case is copy everything from current to container home/app)
+CMD ["node","server.js"] (to run the commands) (could have also been: RUN node server.js; but a image can have multiple RUN but only one CMD which serves as an entry point)
+
