@@ -1,0 +1,25 @@
+Setup MySQL on Docker Ubuntu
+first of all use the following link to install docker on ubuntu:
+https://docs.docker.com/engine/install/ubuntu/
+
+now create a file docker-compose.yaml and add the following code:
+services:
+  mysql:
+    image: mysql
+    env_file:
+      - .env
+    ports:
+      - '3306:3306'
+
+
+add the following in .env
+MYSQL_ROOT_PASSWORD=randomrootpassword
+MYSQL_DATABASE=nestjs_typeorm
+MYSQL_HOST=127.0.0.1
+MYSQL_PORT=3306
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=randomrootpassword
+MYSQL_SYNCHRONIZE=true
+
+now run ``docker-compose up``
+DOCKER WILL START
