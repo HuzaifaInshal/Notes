@@ -2,6 +2,7 @@
 DOCKER NOTES
 ==========
 
+Install in ubuntu with sudo apt install docker.io -y
 Containers are used to package code, dependencies and configurations and made them portable
 Containers are stored in container repository
 There are private repositories for big corps
@@ -67,13 +68,14 @@ docker ps -a | grep [name to search] (search with name)
 docker exec -it [container id] /bin/bash or /bin/sh (get interactive cmd terminal or runnnig container)
 dokcer tag [image name]:[imagetag] [registry domain]/[registry image]:[tag]
 docker push [registry domain]/[registry image]:[tag]
+dokcer run --network <network name> (to create a container inside a user-defined network or a host (for a host network))
 
 DOCKER COMPOSE COMMANDS:
 docker-compose -f [filename].yaml up (start the compose file)
 docker-compose -f [] down (shut off the containers also removes the network)
 
 
-DOCKER INSTALLATION:
+DOCKER INSTALLATION on windows:
 it will install docker and docker compose both
 first of all check from task manager performance tab in CPU if virtualization is enabled if not then enable it in BIOS
 from Esc then f10 enter in bios in systems security in security tab enable virtaulization
@@ -119,4 +121,50 @@ ENV MONGO_USERNAME=admin (optional if not declaring on mongo image envs)
 RUN mkdir -p/home/app (basically can run any linux cmmnd will not affect host file system, will execute in container environement)
 COPY . /home/app (copy from host file sys to container file sys in this case is copy everything from current to container home/app)
 CMD ["node","server.js"] (to run the commands) (could have also been: RUN node server.js; but a image can have multiple RUN but only one CMD which serves as an entry point)
+
+=========================================================
+CONTENTS FROM https://www.youtube.com/watch?v=bKFMS5C4CG0
+=========================================================
+
+DOCKER NETWORK(on ubuntu ):
+ip add show (to display all docker networks)
+sudo docker inspect bridge (show all info for bridge nw)
+sudo docker exec -it <container name> sh (to get into containeropen its shell)
+sudo docker network create <network name> (to create user-defined network)
+sudo docker network create -d macvlan --subnet <your home address subnet e.g. 10.7.1.0/24> -gateway <your home gateway e.g. 10.7.1.3> -o parent=<your host physical connector network e.g. enp0s3> <network name> (d for driver, creates a macvlan netwrok)
+sudo docker run -itd --rm --network <network name> --ip <ip to assign e.g. 10.7.1.92> --name <local container name> <call container name> (to add a container in docker macvlan netwrok you need to assign ip by urself)
+sudo ip link set enp0s3 promisc on (to open host promisouc mode)
+
+
+7 types of docker networks
+1. The default bridge:
+a bridge network means it uses its host ip, dns to connect to world
+has DHCP for its containers
+docker created virtual ethernets that connects to our containers, whenever we run an image it uses this bridge network by default.
+in bridge nw docker containers can access outside sources and ping them but outside cant use them unless we specify a port on them
+
+2. The user-defined bridge:
+it is also a bridge network but a user created one
+user defined netwrok are isolated means you cant ping anything from outside but can ping neighbouring container on same netwrok
+
+3. THe host
+containers in host network are outside of docker networks and directly uses the host ip and dns
+unlike default bridge no need to expose any ports because it is running directly anyone can access frm outisde
+shows like a container is not a container but an actual application
+
+4. The MACVLAN (bridge mode)
+network replicates the host itself seems like the container is directly connected to your router switch, 
+the container will get its own mac address and ip address
+but the issue is that the netwrok will use the switch port of the host (multiple mac addresses on same port not gud)
+so enable promisiouc mode
+second issue no DHCP (means manually assigning of IP addresses; careful dont add conflicting ip adresses)
+
+5. The MACVLAN (802.1q)
+
+
+
+
+
+
+
 
