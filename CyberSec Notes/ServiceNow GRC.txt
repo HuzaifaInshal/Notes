@@ -1,0 +1,4 @@
+Authority Documents -> citations -> will give controls (control objectives) -> control mapping 
+group of policy (control overlay) -> control objectives (in different family) -> authorization package -> AO approval
+
+first do compliance management then risk management then audit management
